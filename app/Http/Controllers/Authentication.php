@@ -15,8 +15,8 @@ class Authentication extends Controller
         $validated=$request->validate([
             "name"=>["required","string","min:3"],
             "email"=>["required","email", "unique:users,email"],
+            "phone"=>["required","string","min:10","max:10"],
             "password"=>["required", "confirmed","min:4"],
-            "businessname"=>["required","string"],
         ]);
         $validated['isadmin']=0;
         // dd($validated);

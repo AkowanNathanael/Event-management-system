@@ -53,7 +53,7 @@
                                                 $total += $cart->ticket->price * $cart->quantity;
                                                 }
                                                 @endphp
-
+                                                @isset($cart)
                                                 <div class="alert alert-info fw-bold mb-4 d-flex justify-content-between align-items-center" style="font-size: 1.2rem;">
                                                     <span>
                                                         Total Cost: <span class="text-success">{{ number_format($total, 2) }} GHS</span>
@@ -62,6 +62,8 @@
                                                         <i class="fa fa-credit-card"></i> Pay
                                                     </button>
                                                 </div>
+                                                @endisset
+
 
                                                 <!-- Payment Modal/Form -->
                                                 <div id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999;">
@@ -69,23 +71,29 @@
                                                         <button type="button" class="btn-close" aria-label="Close" style="position:absolute; top:10px; right:10px;" onclick="document.getElementById('paymentModal').style.display='none'"></button>
                                                         <form id="paymentForm">
                                                             <div class="form-group mb-2">
-                                                                <label for="email">Email Address</label>
-                                                                <input value="{{ auth()->user()->email}}" type="email" id="email-address" class="form-control" required />
+                                                                <label for="email-address">Email Address</label>
+                                                                <input value="{{ auth()->user()->email}}" type="email"
+                                                                    name="email-address"
+                                                                    id="email-address" class="form-control" required />
                                                             </div>
                                                             <div class="form-group mb-2">
                                                                 <label for="amount">Amount</label>
-                                                                <input type="tel" id="amount" class="form-control" value="{{ number_format($total, 2) }}" readonly />
+                                                                <input step="0.01" type="number" id="amount" class="form-control" value="{{ number_format($total, 2) }}" readonly />
                                                             </div>
                                                             <div class="form-group mb-2">
                                                                 <label for="first-name">First Name</label>
-                                                                <input type="text" id="first-name" class="form-control" />
+                                                                <input placeholder="enter first name on Ghanacard" required type="text" id="first-name" class="form-control" />
+                                                            </div>
+                                                            <div class="form-group mb-2">
+                                                                <label for="middle-name">Middle Name</label>
+                                                                <input type="text" name="middle-name" id="middle-name" class="form-control" />
                                                             </div>
                                                             <div class="form-group mb-2">
                                                                 <label for="last-name">Last Name</label>
-                                                                <input type="text" id="last-name" class="form-control" />
+                                                                <input placeholder="enter last name on Ghanacard" type="text" id="last-name" class="form-control" />
                                                             </div>
                                                             <div class="form-submit mt-3">
-                                                                <button type="submit" onclick="payWithPaystack()">Pay</button>
+                                                                <button type="submit">Pay</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -152,20 +160,20 @@
                                                             <i class="fa-solid fa-map-pin fa-fw"></i>
                                                             {{ $cart->ticket->event->venue->address }}
                                                         </a>
-                                                        <form action="/admin/cart/{{$cart->ticket->id}}/store?price={{$cart->ticket->price}}" method="POST" class="mt-2 d-flex flex-column align-items-center">
-                                                            @method('POST')
+                                                        <form action="/admin/cart/{{$cart->id}}/{{$cart->ticket->id}}?a_qty={{$cart->ticket->a_qty }}" method="POST" class="mt-2 d-flex flex-column align-items-center">
+                                                            @method('DELETE')
                                                             @csrf
                                                             <div class="input-group mb-2" style="width:140px;">
-                                                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                                <!-- <button disabled type="button" class="btn btn-outline-secondary btn-sm" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                                                     <i class="fab fa-minus">-</i>
-                                                                </button>
-                                                                <input type="number" id="quantity" name="quantity" class="form-control text-center" value="1" max="{{$cart->ticket->qty}}" min="1" style="max-width: 70px; min-width: 50px;">
-                                                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                                </button> -->
+                                                                <input readonly type="number" id="quantity" name="quantity" class="form-control text-center" value="{{$cart->quantity}}" style="max-width: 70px; min-width: 50px;">
+                                                                <!-- <button disabled type="button" class="btn btn-outline-secondary btn-sm" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                                                                     <i class="fa fa-plus">+</i>
-                                                                </button>
+                                                                </button> -->
                                                             </div>
                                                             <button type="submit" class="btn btn-success w-100">
-                                                                <i class="fa fa-cart-plus"></i> Add to Cart
+                                                                <i class="fa fa-cart-plus"></i> remove
                                                             </button>
                                                         </form>
                                                     </div>
@@ -208,111 +216,146 @@
     <script src="https://js.paystack.co/v2/inline.js"></script>
     <script>
         document.getElementById('paymentForm').addEventListener('submit', function(e) {
-                    e.preventDefault(); // Prevent default form submission
-                    const email = document.getElementById('email-address').value;
-                    const amount = document.getElementById('amount').value.replace(/,/g, ''); // Remove commas
-                    const firstName = document.getElementById('first-name').value;
-                    const lastName = document.getElementById('last-name').value;
-                    if (!email || !amount || !firstName || !lastName) {
-                        alert('Please fill in all fields.');
-                        return;
-                    }
-                    // Convert amount to kobo (1 GHS = 100 kobo)
-                    const amountInKobo = parseFloat(amount) * 100;
-                    const paystack = new PaystackPop();
-                    paystack.newTransaction({
-                        key: "{{ env('PAYSTACK_PUBLIC_KEY') }}", // Replace with your public key
-                        email: email,
-                        amount: amountInKobo,
-                        currency: 'GHS',
-                        // channels: ['mobile_money']
-                        firstName: firstName,
-                        lastName: lastName,
-                        onSuccess: (transaction) => {
-                            alert(`Payment complete! Reference: ${transaction.reference}`);
-                            document.getElementById('paymentModal').style.display = 'none';
-                        },
-                        onCancel: () => {
-                            alert('Transaction was cancelled');
-                        },
-                        onLoad: (response) => {
-                            console.log("onLoad: ", response);
-                        },
-                        onError: (error) => {
-                            alert(`Error: ${error.message}`);
-                            console.log("Error: ", error.message);
+            e.preventDefault(); // Prevent default form submission
+            const email = document.getElementById('email-address').value;
+            const amount = document.getElementById('amount').value.replace(/,/g, ''); // Remove commas
+            const firstName = document.getElementById('first-name').value;
+            const middlename = document.getElementById('middle-name').value;
+            const lastName = document.getElementById('last-name').value;
+            if (!email || !amount || !firstName || !lastName) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            // Convert amount to kobo (1 GHS = 100 kobo)
+            const amountInKobo = parseFloat(amount) * 100;
+            const paystack = new PaystackPop();
+            paystack.newTransaction({
+                key: "{{ env('PAYSTACK_PUBLIC_KEY') }}", // Replace with your public key
+                email: email,
+                amount: amountInKobo,
+                currency: 'GHS',
+                // channels: ['mobile_money']
+                firstName: firstName,
+                lastName: lastName,
+                onSuccess: (transaction) => {
+                    alert(`Payment complete! Reference: ${transaction.reference}`);
+                    document.getElementById('paymentModal').style.display = 'none';
+
+                    // Prepare data to send
+                    const data = {
+                        reference: transaction.reference,
+                        "email-address": document.getElementById('email-address').value,
+                        amount: document.getElementById('amount').value.replace(/,/g, ''),
+                        "first-name": document.getElementById('first-name').value,
+                        "middle-name": document.getElementById('middle-name').value,
+                        "last-name": document.getElementById('last-name').value,
+                        // add more fields if needed
+                    };
+
+                    fetch('/api/receipt?user={{auth()->user()->id}}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error('Server error');
+                            // const data = response.json();
+                            // console.log(data);
+                            return data;
+                        })
+                        .then(json => {
+                            // handle success
+                            console.log('Receipt generated successfully:', json);
+                            alert('Receipt generated successfully! Check your email for the receipt.');
+                        })
+                        .catch(error => {
+                            alert(' client error:Failed to generate receipt: ' + error.message);
+                        });
+                },
+                onCancel: () => {
+                    alert('Transaction was cancelled');
+                },
+                onLoad: (response) => {
+                    console.log("onLoad: ", response);
+                },
+                onError: (error) => {
+                    alert(`Error: ${error.message}`);
+                    console.log("Error: ", error.message);
+                }
+            });
+        });
+
+        // const popup = new PaystackPop()
+
+        // popup.newTransaction({
+        //     key: 'pk_domain_xxxxxx',
+        //     email: 'sample@email.com',
+        //     amount: 23400,
+        //     onSuccess: (transaction) => {
+        //         console.log(transaction);
+        //     },
+        //     onLoad: (response) => {
+        //         console.log("onLoad: ", response);
+        //     },
+        //     onCancel: () => {
+        //         console.log("onCancel");
+        //     },
+        //     onError: (error) => {
+        //         console.log("Error: ", error.message);
+        //     }
+        // })
+
+        // popup.checkout({
+        //     key: 'pk_domain_xxxxxx',
+        //     email: 'sample@email.com',
+        //     amount: 23400,
+        //     onSuccess: (transaction) => {
+        //         console.log(transaction);
+        //     },
+        //     onLoad: (response) => {
+        //         console.log("onLoad: ", response);
+        //     },
+        //     onCancel: () => {
+        //         console.log("onCancel");
+        //     },
+        //     onError: (error) => {
+        //         console.log("Error: ", error.message);
+        //     }
+        // })
+        var quantity = document.getElementById("quantity").value;
+        document.addEventListener("DOMContentLoaded", function() {
+            var els = document.querySelectorAll(".option");
+            els.forEach(element => {
+                element.disabled = "";
+            });
+            console.log(els);
+
+            new DataTable("#basic");
+
+            const deleteButtons = document.querySelectorAll("#delete"); // Select all delete buttons
+            deleteButtons.forEach(deleteButton => {
+                deleteButton.addEventListener("click", function(e) {
+                    e.preventDefault(); // Prevent the default form submission
+                    const form = e.target.closest("form"); // Get the closest parent form
+                    swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit(); // Submit the form programmatically
                         }
                     });
                 });
-
-                // const popup = new PaystackPop()
-
-                // popup.newTransaction({
-                //     key: 'pk_domain_xxxxxx',
-                //     email: 'sample@email.com',
-                //     amount: 23400,
-                //     onSuccess: (transaction) => {
-                //         console.log(transaction);
-                //     },
-                //     onLoad: (response) => {
-                //         console.log("onLoad: ", response);
-                //     },
-                //     onCancel: () => {
-                //         console.log("onCancel");
-                //     },
-                //     onError: (error) => {
-                //         console.log("Error: ", error.message);
-                //     }
-                // })
-
-                // popup.checkout({
-                //     key: 'pk_domain_xxxxxx',
-                //     email: 'sample@email.com',
-                //     amount: 23400,
-                //     onSuccess: (transaction) => {
-                //         console.log(transaction);
-                //     },
-                //     onLoad: (response) => {
-                //         console.log("onLoad: ", response);
-                //     },
-                //     onCancel: () => {
-                //         console.log("onCancel");
-                //     },
-                //     onError: (error) => {
-                //         console.log("Error: ", error.message);
-                //     }
-                // })
-                var quantity = document.getElementById("quantity").value;
-                document.addEventListener("DOMContentLoaded", function() {
-                    var els = document.querySelectorAll(".option");
-                    els.forEach(element => {
-                        element.disabled = "";
-                    });
-                    console.log(els);
-
-                    new DataTable("#basic");
-
-                    const deleteButtons = document.querySelectorAll("#delete"); // Select all delete buttons
-                    deleteButtons.forEach(deleteButton => {
-                        deleteButton.addEventListener("click", function(e) {
-                            e.preventDefault(); // Prevent the default form submission
-                            const form = e.target.closest("form"); // Get the closest parent form
-                            swal.fire({
-                                title: "Are you sure?",
-                                text: "You won't be able to revert this",
-                                icon: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "#3085d6",
-                                cancelButtonColor: "#d33",
-                                confirmButtonText: "Yes, delete it"
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    form.submit(); // Submit the form programmatically
-                                }
-                            });
-                        });
-                    });
-                });
+            });
+        });
     </script>
     {{-- core js end  --}}
 </body>

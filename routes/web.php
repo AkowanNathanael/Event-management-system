@@ -19,6 +19,8 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TicketTypeController;
 use App\Http\Controllers\VenueController;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,7 +35,13 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
+
 //
+Route::get("/email", function () {
+   Mail::to("danyonathaniel7@gmail.com")->send(new \App\Mail\Sample(Auth::user()));
+})->middleware("auth");
+
 Route::get("/login", function () {
     return view("login");
 })->name("login")->middleware("guest");
@@ -44,24 +52,32 @@ Route::get("/admin/dashboard",function(){
     $users=User::where("isadmin", "0")->count();
     $admins=User::where("isadmin", "1")->count();
     $categories=\App\Models\Category::all()->count();
-    $posts=\App\Models\Post::all()->count();
+    $eventArtists=\App\Models\EventArtist::all()->count();
     $events=\App\Models\Event::all()->count();
-    $resources=\App\Models\Resource::all()->count();
-    $services=\App\Models\Service::all()->count();
-    $podcasts=\App\Models\Podcast::all()->count();
-    $quizzes=\App\Models\Quiz::all()->count();
+    $ticketTypes=\App\Models\TicketType::all()->count();
+    // $services=\App\Models\Service::all()->count();
+    $carts=\App\Models\Cart::all()->count();
+    // $quizzes=\App\Models\Quiz::all()->count();
     // $questions=\App\Models\Question::all()->count();
     $data=[
         "users"=>$users,
         "admins"=>$admins,
         "categories"=>$categories,
-        "posts"=>$posts,
+        "eventArtists"=>$eventArtists,
         "events"=>$events,
-        "resources"=>$resources,
-        "services"=>$services,
-        "podcasts"=>$podcasts,
-        "quizzes"=>$quizzes,
-        // "questions"=>$questions
+        "ticketTypes"=>$ticketTypes,
+        "carts"=>$carts,
+        "paidTickets"=>\App\Models\Cart::where("status", "paid")->count(),
+        "orderedTickets"=>\App\Models\Cart::where("status", "ordered")->count(),
+        "userCarts" => \App\Models\Cart::where('user_id', Auth::id())->count(),
+        "userPaidTickets" => \App\Models\Cart::where('user_id', Auth::id())
+            ->where('status', 'paid')
+            ->count(),
+        "userOrderedTickets" => \App\Models\Cart::where('user_id', Auth::id())
+            ->where('status', 'ordered')
+            ->count(),
+
+
     ];
     // dd($data);
 
@@ -127,10 +143,15 @@ Route::middleware("auth")->group(function () {
     Route::get("/admin/cart", [CartController::class, "index"]);
     Route::get("/admin/cart/{cart}", [CartController::class, "show"]);
     Route::put("/admin/cart/{cart}", [CartController::class, "update"]);
-    Route::delete("/admin/cart/{cart}", [CartController::class, "destroy"]);
+    Route::delete("/admin/cart/{cart}/{ticket}", [CartController::class, "destroy"]);
     Route::get("/admin/cart/{cart}/edit", [CartController::class, "edit"]);
     //
-
+    Route::get("/admin/order", [CartController::class, "orders"]);
+    //
+    Route::get("/admin/receipt", [CartController::class, "receipts"]);
+    Route::get("/admin/receipt/verify", [CartController::class, "verify"]);
+    Route::post("/admin/receipt/find", [CartController::class, "findReference"]);
+    //
     Route::get("/admin/admin/create", [AdminController::class, "create"]);
     Route::post("/admin/admin/store", [AdminController::class, "store"]);
     Route::get("/admin/admin", [AdminController::class, "index"]);
@@ -149,49 +170,7 @@ Route::middleware("auth")->group(function () {
     Route::put("/admin/event/{event}", [EventController::class, "update"]);
     Route::delete("/admin/event/{event}", [EventController::class, "destroy"]);
     Route::get("/admin/event/{event}/edit", [EventController::class, "edit"]);
-    //
-    Route::get("/admin/resource/create", [ResourceController::class, "create"]);
-    Route::post("/admin/resource/store", [ResourceController::class, "store"]);
-    Route::get("/admin/resource", [ResourceController::class, "index"]);
-    Route::get("/admin/resource/{resource}", [ResourceController::class, "show"]);
-    Route::put("/admin/resource/{resource}", [ResourceController::class, "update"]);
-    Route::delete("/admin/resource/{resource}", [ResourceController::class, "destroy"]);
-    Route::get("/admin/resource/{resource}/edit", [ResourceController::class, "edit"]);
-    //
-    Route::get("/admin/service/create", [ServiceController::class, "create"]);
-    Route::post("/admin/service/store", [ServiceController::class, "store"]);
-    Route::get("/admin/service", [ServiceController::class, "index"]);
-    Route::get("/admin/service/{service}", [ServiceController::class, "show"]);
-    Route::put("/admin/service/{service}", [ServiceController::class, "update"]);
-    Route::delete("/admin/service/{service}", [ServiceController::class, "destroy"]);
-    Route::get("/admin/service/{service}/edit", [ServiceController::class, "edit"]);
-    //
-    Route::get("/admin/podcast/create", [PodcastController::class, "create"]);
-    Route::post("/admin/podcast/store", [PodcastController::class, "store"]);
-    Route::get("/admin/podcast", [PodcastController::class, "index"]);
-    Route::get("/admin/podcast/{podcast}", [PodcastController::class, "show"]);
-    Route::put("/admin/podcast/{podcast}", [PodcastController::class, "update"]);
-    Route::delete("/admin/podcast/{podcast}", [PodcastController::class, "destroy"]);
-    Route::get("/admin/podcast/{podcast}/edit", [PodcastController::class, "edit"]);
-    //
-    Route::get("/admin/quiz/create", [QuizController::class, "create"]);
-    Route::post("/admin/quiz/store", [QuizController::class, "store"]);
-    Route::get("/admin/quiz", [QuizController::class, "index"]);
-    Route::get("/admin/quiz/{quiz}", [QuizController::class, "show"]);
-    Route::put("/admin/quiz/{quiz}", [QuizController::class, "update"]);
-    Route::delete("/admin/quiz/{quiz}", [QuizController::class, "destroy"]);
-    Route::get("/admin/quiz/{quiz}/edit", [QuizController::class, "edit"]);
-    //
-    Route::get("/admin/question/create", [QuestionController::class, "create"]);
-    Route::post("/admin/question/store", [QuestionController::class, "store"]);
-    Route::post("/admin/add-question-label", [QuestionController::class, "addOptionLabel"]);
-    Route::get("/admin/question", [QuestionController::class, "index"]);
-    // Route::get("/admin/question/{question}", [QuestionController::class, "show"]);
-    Route::put("/admin/question/{question}", [QuestionController::class, "update"]);
-    Route::delete("/admin/question/{question}", [QuestionController::class, "destroy"]);
-    Route::get("/admin/question/{question}/edit", [QuestionController::class, "edit"]);
-    Route::get("/admin/view-question/{quiz}", [QuestionController::class, "show"]);
-    Route::get('/admin/question/{id}/correct-answer', [QuestionController::class, 'getCorrectAnswer']);
+
     //
     Route::get("/admin/profile", [ProfileController::class, "profile"]);
     // User
@@ -218,8 +197,13 @@ Route::post("/register/auth", [Authentication::class, "register"]);
 //
 
 //
-Route::redirect("/", "/login")->name("home");
-
+// Route::redirect("/", "/login")->name("home");
+Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect('/admin/dashboard');
+    }
+    return redirect('/login');
+})->name('home');
 
 
 

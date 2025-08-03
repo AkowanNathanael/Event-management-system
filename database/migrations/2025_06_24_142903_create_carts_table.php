@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('quantity')->default(1);
             $table->decimal('price', 10, 2);
             $table->decimal('total_price', 10, 2)->default(0.00); // Total
-            $table->string('status')->default('active'); // e.g., active, ordered
+            $table->string('status')->default('ordered'); // e.g., paid, ordered
             $table->timestamps();
         });
     }

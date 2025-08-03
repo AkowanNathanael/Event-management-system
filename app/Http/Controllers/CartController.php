@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
 use App\Models\Cart;
+use App\Models\Receipt;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class CartController extends Controller
     public function index()
     {
         //
-        $carts = Cart::where('user_id', Auth::id())->get();
+        $carts = Cart::where('user_id', Auth::id())->where("status","ordered")->get();
         // dd($carts);
         return view('admin.cart.index', [
             'carts' => $carts,
@@ -82,8 +83,50 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cart $cart)
+    public function destroy(Cart $cart , Ticket $ticket , Request $request)
     {
         //
+        dd($cart, $request->query("a_qty"), $ticket);
+        $ticket->a_qty += $request->query("a_qty", 0);
+        $ticket->save();
+        // $ticket_id=$cart->ticket_id;
+        // $ticket=Ticket::find($ticket_id);
+        // $ticket->a_qty +=$cart->quantity;
+        // $ticket->save();
+        // // dd($ticket, $ticket->a_qty, $cart->quantity);
+        $cart->delete();
+        return back()->with("message","ticket removed from cart");
+    }
+    function orders(){
+        $carts = Cart::where('user_id', Auth::id())->where("status","paid")->get();
+        return view('admin.order.index', [
+            'carts' => $carts,
+        ]);
+    }
+
+    function receipts(){
+        $receipts=Receipt::where('user_id', Auth::id())->get();
+        return view('admin.receipt.index', [
+            'receipts' => $receipts,
+        ]);
+    }
+    function verify(){
+        return view("admin.receipt.verifiy");
+    }
+
+    function findReference(Request $request){
+        $reference = $request->input('reference');
+        if (!$reference) {
+            return response()->json(['error' => 'Reference is required'], 400);
+        }
+        $receipt = Receipt::where('reference', $reference)->first();
+        if (!$receipt) {
+            return response()->json(['error' => 'Receipt not found'], 404);
+        }
+        return response()->json(['receipt' => $receipt, 'message' => 'Receipt found'], 200);
+
+        // return view('admin.receipt.show', ['receipt' => $receipt]);
+
     }
 }
+

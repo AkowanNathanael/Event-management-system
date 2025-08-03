@@ -142,17 +142,17 @@
                    </p>
                 @enderror
                  <div class="mb-6">
-                  <label for="businessname" class="form-label">Business Name</label>
+                  <label for="phone" class="form-label">phone</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="businessname"
-                     value="{{ old('businessname') }}"
-                    name="businessname" required
-                    placeholder="Enter your bussiness name"
+                    id="phone"
+                     value="{{ old('phone') }}"
+                    name="phone" required
+                    placeholder="Enter your phone number"
                     autofocus />
                 </div>
-                 @error('businessname')
+                 @error('phone')
                    <p class="text-danger">
                     {{ $message }}
                    </p>

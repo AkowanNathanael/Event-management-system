@@ -36,173 +36,219 @@
 
 
                         @if (auth()->user()->isadmin == 1)
-                            <div class="row">
-                                <div id="csa">
-                                </div>
+                        <div class="row">
+                            <div id="csa">
                             </div>
-                            <div class="row">
-                                <!-- Order Statistics -->
-                                <div class="col-md-6 col-lg-12 col-xl-12 order-0 mb-6">
-                                    <div class="card h-100">
-                                        <div class="card-header d-flex justify-content-between">
-                                            <div class="card-title mb-0">
-                                                <h5 class="mb-1 me-2"> @auth
-                                                        auther
-                                                        @endauth || @guest
-                                                        Welcome guest
-                                                    @endguest </h5>
-
-                                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Order Statistics -->
+                            <div class="col-md-6 col-lg-12 col-xl-12 order-0 mb-6">
+                                <div class="card h-100">
+                                    <div class="card-header d-flex justify-content-between">
+                                        <div class="card-title mb-0">
+                                            <h5 class="mb-1 me-2"> @auth
+                                                auther
+                                                @endauth || @guest
+                                                Welcome guest
+                                                @endguest </h5>
 
                                         </div>
-                                        <div class="card-body row">
-                                            <div class="card  col-lg-3 m-1 shadow shadow-primary">
-                                                <div class="card-body">
-                                                    <div
-                                                        class="card-title d-flex align-items-start justify-content-between mb-4">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
-                                                                alt="wallet info" class="rounded">
-                                                        </div>
+
+                                    </div>
+                                    <div class="card-body row">
+                                        <div class="card  col-lg-3 m-1 shadow shadow-primary">
+                                            <div class="card-body">
+                                                <div
+                                                    class="card-title d-flex align-items-start justify-content-between mb-4">
+                                                    <div class="avatar flex-shrink-0">
+                                                        <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                            alt="wallet info" class="rounded">
                                                     </div>
-                                                    <p class="mb-1">No. of Users</p>
-                                                    <h4 class="card-title mb-3">{{ $users }}</h4>
-                                                    {{-- <small class="text-success fw-medium"><i
-                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                                 </div>
+                                                <p class="mb-1">No. of Users</p>
+                                                <h4 class="card-title mb-3">{{ $users }}</h4>
+                                                {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> </small> --}}
                                             </div>
-                                            <div class="card  col-lg-4 m-1 shadow shadow-primary">
-                                                <div class="card-body">
-                                                    <div
-                                                        class="card-title d-flex align-items-start justify-content-between mb-4">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
-                                                                alt="wallet info" class="rounded">
-                                                        </div>
+                                        </div>
+                                        <div class="card  col-lg-4 m-1 shadow shadow-primary">
+                                            <div class="card-body">
+                                                <div
+                                                    class="card-title d-flex align-items-start justify-content-between mb-4">
+                                                    <div class="avatar flex-shrink-0">
+                                                        <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                            alt="wallet info" class="rounded">
                                                     </div>
-                                                    <p class="mb-1">No. of Admins</p>
-                                                    <h4 class="card-title mb-3">{{ $admins }}</h4>
-                                                    {{-- <small class="text-success fw-medium"><i
-                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                                 </div>
+                                                <p class="mb-1">No. of Admins</p>
+                                                <h4 class="card-title mb-3">{{ $admins }}</h4>
+                                                {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                             </div>
-                                            <div class="card  col-lg-4 m-1 shadow shadow-primary">
-                                                <div class="card-body">
-                                                    <div
-                                                        class="card-title d-flex align-items-start justify-content-between mb-4">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
-                                                                alt="wallet info" class="rounded">
-                                                        </div>
+                                        </div>
+                                        <div class="card  col-lg-4 m-1 shadow shadow-primary">
+                                            <div class="card-body">
+                                                <div
+                                                    class="card-title d-flex align-items-start justify-content-between mb-4">
+                                                    <div class="avatar flex-shrink-0">
+                                                        <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                            alt="wallet info" class="rounded">
                                                     </div>
-                                                    <p class="mb-1">No. of Categories</p>
-                                                    <h4 class="card-title mb-3">{{ $categories }}</h4>
-                                                    {{-- <small class="text-success fw-medium"><i
-                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                                 </div>
+                                                <p class="mb-1">No. of Categories</p>
+                                                <h4 class="card-title mb-3">{{ $categories }}</h4>
+                                                {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> </small> --}}
                                             </div>
-                                            <div class="card  col-lg-4 m-1 shadow shadow-primary">
-                                                <div class="card-body">
-                                                    <div
-                                                        class="card-title d-flex align-items-start justify-content-between mb-4">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
-                                                                alt="wallet info" class="rounded">
-                                                        </div>
+                                        </div>
+                                        <div class="card  col-lg-4 m-1 shadow shadow-primary">
+                                            <div class="card-body">
+                                                <div
+                                                    class="card-title d-flex align-items-start justify-content-between mb-4">
+                                                    <div class="avatar flex-shrink-0">
+                                                        <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                            alt="wallet info" class="rounded">
                                                     </div>
-                                                    <p class="mb-1">No. of Posts</p>
-                                                    <h4 class="card-title mb-3">{{ $posts }}</h4>
-                                                    {{-- <small class="text-success fw-medium"><i
-                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                                 </div>
+                                                <p class="mb-1">No. of Event Artists</p>
+                                                <h4 class="card-title mb-3">{{ $eventArtists }}</h4>
+                                                {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                             </div>
-                                            <div class="card  col-lg-3 m-1 shadow shadow-primary">
-                                                <div class="card-body">
-                                                    <div
-                                                        class="card-title d-flex align-items-start justify-content-between mb-4">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
-                                                                alt="wallet info" class="rounded">
-                                                        </div>
+                                        </div>
+                                        <div class="card  col-lg-3 m-1 shadow shadow-primary">
+                                            <div class="card-body">
+                                                <div
+                                                    class="card-title d-flex align-items-start justify-content-between mb-4">
+                                                    <div class="avatar flex-shrink-0">
+                                                        <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                            alt="wallet info" class="rounded">
                                                     </div>
-                                                    <p class="mb-1">No. of Events</p>
-                                                    <h4 class="card-title mb-3">{{ $events }}</h4>
-                                                    {{-- <small class="text-success fw-medium"><i
-                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                                 </div>
+                                                <p class="mb-1">No. of Events</p>
+                                                <h4 class="card-title mb-3">{{ $events }}</h4>
+                                                {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                             </div>
-                                            <div class="card  col-lg-4 m-1 shadow shadow-primary">
-                                                <div class="card-body">
-                                                    <div
-                                                        class="card-title d-flex align-items-start justify-content-between mb-4">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
-                                                                alt="wallet info" class="rounded">
-                                                        </div>
+                                        </div>
+                                        <div class="card  col-lg-4 m-1 shadow shadow-primary">
+                                            <div class="card-body">
+                                                <div
+                                                    class="card-title d-flex align-items-start justify-content-between mb-4">
+                                                    <div class="avatar flex-shrink-0">
+                                                        <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                            alt="wallet info" class="rounded">
                                                     </div>
-                                                    <p class="mb-1">No. of Resources</p>
-                                                    <h4 class="card-title mb-3">{{ $resources }}</h4>
-                                                    {{-- <small class="text-success fw-medium"><i
-                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                                 </div>
+                                                <p class="mb-1">No. of Ticket types</p>
+                                                <h4 class="card-title mb-3">{{ $ticketTypes }}</h4>
+                                                {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                             </div>
-                                            <div class="card  col-lg-4 m-1 shadow shadow-primary">
-                                                <div class="card-body">
-                                                    <div
-                                                        class="card-title d-flex align-items-start justify-content-between mb-4">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
-                                                                alt="wallet info" class="rounded">
-                                                        </div>
+                                        </div>
+                                        <div class="card  col-lg-4 m-1 shadow shadow-primary">
+                                            <div class="card-body">
+                                                <div
+                                                    class="card-title d-flex align-items-start justify-content-between mb-4">
+                                                    <div class="avatar flex-shrink-0">
+                                                        <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                            alt="wallet info" class="rounded">
                                                     </div>
-                                                    <p class="mb-1">No. of Podcats</p>
-                                                    <h4 class="card-title mb-3">{{ $podcasts }}</h4>
-                                                    {{-- <small class="text-success fw-medium"><i
-                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                                 </div>
+                                                <p class="mb-1">No. of carts</p>
+                                                <h4 class="card-title mb-3">{{ $carts }}</h4>
+                                                {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                             </div>
-                                            <div class="card  col-lg-4 m-1 shadow shadow-primary">
-                                                <div class="card-body">
-                                                    <div
-                                                        class="card-title d-flex align-items-start justify-content-between mb-4">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
-                                                                alt="wallet info" class="rounded">
-                                                        </div>
+                                        </div>
+                                        <div class="card  col-lg-4 m-1 shadow shadow-primary">
+                                            <div class="card-body">
+                                                <div
+                                                    class="card-title d-flex align-items-start justify-content-between mb-4">
+                                                    <div class="avatar flex-shrink-0">
+                                                        <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                            alt="wallet info" class="rounded">
                                                     </div>
-                                                    <p class="mb-1">No. of Quizzes</p>
-                                                    <h4 class="card-title mb-3">{{ $quizzes }}</h4>
-                                                    {{-- <small class="text-success fw-medium"><i
-                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                                 </div>
+                                                <p class="mb-1">No. of Paid Tickets </p>
+                                                <h4 class="card-title mb-3">{{ $paidTickets }}</h4>
+                                                {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                             </div>
-                                            <div class="card  col-lg-3 m-1 shadow shadow-primary">
-                                                <div class="card-body">
-                                                    <div
-                                                        class="card-title d-flex align-items-start justify-content-between mb-4">
-                                                        <div class="avatar flex-shrink-0">
-                                                            <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
-                                                                alt="wallet info" class="rounded">
-                                                        </div>
+                                        </div>
+                                        <div class="card  col-lg-3 m-1 shadow shadow-primary">
+                                            <div class="card-body">
+                                                <div
+                                                    class="card-title d-flex align-items-start justify-content-between mb-4">
+                                                    <div class="avatar flex-shrink-0">
+                                                        <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                            alt="wallet info" class="rounded">
                                                     </div>
-                                                    <p class="mb-1">No. of Services</p>
-                                                    <h4 class="card-title mb-3">{{ $services }}</h4>
-                                                    {{-- <small class="text-success fw-medium"><i
-                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                                 </div>
+                                                <p class="mb-1">No. of Ordered Tickets </p>
+                                                <h4 class="card-title mb-3">{{ $orderedTickets }}</h4>
+                                                {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!--/ Order Statistics -->
                             </div>
+                            <!--/ Order Statistics -->
+                        </div>
                         @else
-                            <div class="row">
-                                
-                                    <h1>Welcome to Cyber security awareness </h1>
-                                    <p> {{ auth()->user()->name }} </p>
-                                
+                        <div class="p-2">
+                            <h1>EMS KNUST </h1>
+                            <p> {{ auth()->user()->name }} </p>
+                            <div class="card row p-3 col-lg-12 col-md-12 col-sm-12">
+                                <div class="  col-lg-3 col-md-3 col-sm-5 m-1 shadow shadow-primary">
+                                    <div class="card-body">
+                                        <div
+                                            class="card-title d-flex align-items-start justify-content-between mb-4">
+                                            <div class="avatar flex-shrink-0">
+                                                <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                    alt="wallet info" class="rounded">
+                                            </div>
+                                        </div>
+                                        <p class="mb-1">No. of user Paid Tickets</p>
+                                        <h4 class="card-title mb-3">{{ $userPaidTickets }}</h4>
+                                        {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
+                                    </div>
+                                </div>
+                                <div class="  col-lg-3 col-md-3 col-sm-5 m-1 shadow shadow-primary">
+                                    <div class="card-body">
+                                        <div
+                                            class="card-title d-flex align-items-start justify-content-between mb-4">
+                                            <div class="avatar flex-shrink-0">
+                                                <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                    alt="wallet info" class="rounded">
+                                            </div>
+                                        </div>
+                                        <p class="mb-1">No. of User Ordered Tickets</p>
+                                        <h4 class="card-title mb-3">{{ $userOrderedTickets }}</h4>
+                                        {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
+                                    </div>
+                                </div>
+                                <div class="  col-lg-3 col-md-3 col-sm-5 m-1 shadow shadow-primary">
+                                    <div class="card-body">
+                                        <div
+                                            class="card-title d-flex align-items-start justify-content-between mb-4">
+                                            <div class="avatar flex-shrink-0">
+                                                <img src="{{ asset('dist/img/icons/unicons/wallet-info.png') }}"
+                                                    alt="wallet info" class="rounded">
+                                            </div>
+                                        </div>
+                                        <p class="mb-1">No. of Carts</p>
+                                        <h4 class="card-title mb-3">{{ $userCarts }}</h4>
+                                        {{-- <small class="text-success fw-medium"><i
+                                                        class="icon-base bx bx-up-arrow-alt"></i> +28.42%</small> --}}
+                                    </div>
+                                </div>
                             </div>
+
+                        </div>
                         @endif
                     </div>
                     <!-- / Content -->
@@ -238,9 +284,9 @@
             const csaChartEl = document.querySelector("#csa"),
                 csaChartConfig = {
                     series: [{
-                        data: [{{ $categories }}, {{ $events }}, {{ $podcasts }},
-                            {{ $posts }}, {{ $quizzes }}, {{ $resources }},
-                            {{ $services }}
+                        data: ["{{ $categories }}", "{{ $events }}", "{{ $eventArtists }}",
+                            "{{ $ticketTypes }}", "{{ $paidTickets }}", "{{ $orderedTickets }}",
+                            "{{ $users }}"
                         ],
                     }, ],
                     chart: {
@@ -303,8 +349,8 @@
                         },
                     },
                     xaxis: {
-                        categories: ["categories", "events", "podcasts", "posts", "quizzes", "resources",
-                            "services"
+                        categories: ["categories", "events", "event artists", "ticket types", "paid tickets", "ordered tickets",
+                            "users"
                         ],
                         axisBorder: {
                             show: false,

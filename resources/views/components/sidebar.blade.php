@@ -75,10 +75,17 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="/admin/post/create"
+                    <a href="/admin/receipt"
                         class="menu-link">
-                        <div class="text-truncate" data-i18n="CRM">Add Post</div>
-                        <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>
+                        <div class="text-truncate" data-i18n="CRM">Receipts</div>
+                        <!-- <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div> -->
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/admin/receipt/verify"
+                        class="menu-link">
+                        <div class="text-truncate" data-i18n="CRM">verify receipt</div>
+                        <!-- <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div> -->
                     </a>
                 </li>
                 <li class="menu-item">
@@ -91,6 +98,18 @@
             </ul>
         </li>
 
+        <li class="menu-item">
+            <a href="/admin/cart" class="menu-link ">
+                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                <div class="text-truncate" data-i18n="Authentications">Cart</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/admin/order" class="menu-link ">
+                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                <div class="text-truncate" data-i18n="Authentications">Orders</div>
+            </a>
+        </li>
         <!-- Layouts -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -304,9 +323,8 @@
                     </svg>
                 </span>
             </span>
-            <span class="app-brand-text demo menu-text fw-bold ms-2">CSA User</span>
+            <span class="app-brand-text demo menu-text fw-bold ms-2">EMS admin</span>
         </a>
-
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
             <i class="bx bx-chevron-left d-block d-xl-none align-middle"></i>
         </a>
@@ -322,7 +340,7 @@
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 <div class="text-truncate" data-i18n="Dashboards">Dashboards</div>
-                <span class="badge rounded-pill bg-danger ms-auto">5</span>
+                <!-- <span class="badge rounded-pill bg-danger ms-auto">5</span> -->
             </a>
             <ul class="menu-sub">
                 <li class="menu-item active">
@@ -331,61 +349,59 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="/user/post"
+                    <a href="/admin/receipt"
                         class="menu-link">
-                        <div class="text-truncate" data-i18n="CRM">Posts</div>
-                        <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>
+                        <div class="text-truncate" data-i18n="CRM">Receipts</div>
+                        <!-- <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div> -->
                     </a>
                 </li>
+
             </ul>
         </li>
 
+        <li class="menu-item">
+            <a href="/admin/cart" class="menu-link ">
+                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                <div class="text-truncate" data-i18n="Authentications">Cart</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/admin/order" class="menu-link ">
+                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                <div class="text-truncate" data-i18n="Authentications">Orders</div>
+            </a>
+        </li>
         <!-- Layouts -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div class="text-truncate" data-i18n="Layouts">Events & Service</div>
+                <div class="text-truncate" data-i18n="Layouts">Events</div>
             </a>
 
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="/user/event" class="menu-link">
-                        <div class="text-truncate" data-i18n="Without navbar"> Events</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="/user/service" class="menu-link">
-                        <div class="text-truncate" data-i18n="Blank"> Services</div>
+                    <a href="/admin/event" class="menu-link">
+                        <div class="text-truncate" data-i18n="Without navbar">View Events</div>
                     </a>
                 </li>
             </ul>
         </li>
+
+        <!-- Apps & Pages -->
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Other &amp; menu</span>
+        </li>
         <li class="menu-item">
-            <a href="/user/resource" class="menu-link ">
+        </li>
+
+        <!-- Pages -->
+        <li class="menu-item">
+            <a href="/admin/ticket" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div class="text-truncate" data-i18n="Authentications">Resources</div>
+                <div class="text-truncate" data-i18n="Authentications"> ticket list</div>
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="/user/podcast" class="menu-link ">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div class="text-truncate" data-i18n="Authentications"> Poddcasts</div>
-            </a>
-        </li>
-
-        <li class="menu-item">
-            <a href="/user/quiz" class="menu-link ">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div class="text-truncate" data-i18n="Authentications">Quizzes</div>
-            </a>
-        </li>
-        {{-- <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link ">
-                <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div class="text-truncate" data-i18n="Authentications">Add Question</div>
-            </a>
-        </li> --}}
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
@@ -393,7 +409,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="/user/profile" class="menu-link">
+                    <a href="/admin/profile" class="menu-link">
                         <div class="text-truncate" data-i18n="Error">Profile</div>
                     </a>
                 </li>
@@ -407,15 +423,15 @@
         <!-- Misc -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
         <li class="menu-item">
-            <form action="/logout/auth" method="POST">
+            <form class="menu-link" action="/logout/auth" method="POST">
                 @csrf()
-                @method('post')
-                <input type="submit" value="Log Out" name="submit" class="dropdown-item" />
-                <i class="icon-base bx bx-power-off icon-md me-3"></i>
+                @method("post")
+                <input type="submit" name="submit" value="Log Out" class="dropdown-item text-truncate" />
+                {{-- <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span> --}}
                 </input>
             </form>
-            {{-- <a href="/user/profile"
-                target="_blank" class="menu-link">
+            {{-- <a href=""
+                 class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div class="text-truncate" data-i18n="Support">logout</div>
             </a> --}}
