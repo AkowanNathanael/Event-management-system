@@ -88,13 +88,13 @@
                         <!-- <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div> -->
                     </a>
                 </li>
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="/admin/post"
                         class="menu-link">
                         <div class="text-truncate" data-i18n="CRM">Posts</div>
                         <div class="badge rounded-pill bg-label-primary text-uppercase fs-tiny ms-auto">Pro</div>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </li>
 
@@ -211,7 +211,7 @@
             </a>
         </li>
         <li class="menu-item">
-            <a href="/admin/quiz/create" class="menu-link ">
+            <!-- <a href="/admin/quiz/create" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div class="text-truncate" data-i18n="Authentications">Add Quiz</div>
             </a>
@@ -221,7 +221,7 @@
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div class="text-truncate" data-i18n="Authentications">Quizzes</div>
             </a>
-        </li>
+        </li> -->
         <li class="menu-item">
             <a href="/admin/organiser/create" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
